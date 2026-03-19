@@ -86,7 +86,7 @@ const Chatbot = () => {
       <div className="fixed bottom-20 right-6 w-80 h-96 bg-slate-900 text-white rounded-xl shadow-xl flex flex-col z-50">
 
         <div className="p-3 border-b border-slate-700 font-bold">
-          Talk to Vansh 🤖
+          Vansh AI Assistant
         </div>
 
         {/* Chat messages */}
