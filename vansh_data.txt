@@ -1,0 +1,165 @@
+Name: Vansh Sandhir
+
+Location:
+Noida, India
+
+Contact:
+Phone: +91-9915984437
+Email: vansh.sandhir30@gmail.com
+LinkedIn: https://www.linkedin.com/in/vansh-sandhir-432930201/
+GitHub: https://github.com/vanshsandhir
+
+--------------------------------------------------
+
+Summary:
+Vansh Sandhir is a Software Engineer with experience in building scalable and governed data platforms on Microsoft Azure. He specializes in data engineering, analytics, and cloud-based solutions using tools like Azure Databricks, PySpark, Azure Data Factory, Synapse Pipelines, and Microsoft Fabric. He delivers analytics-ready datasets and builds dashboards using Power BI to support business decision-making.
+
+--------------------------------------------------
+
+Technical Skills:
+
+Programming:
+Python, SQL, C++
+
+Data Engineering:
+Azure Databricks, PySpark, ETL/ELT Pipelines, Incremental Loading
+
+Cloud Platforms:
+Azure Data Lake Storage Gen2, Azure Synapse Pipelines, Azure Data Factory, Azure Databricks, Microsoft Fabric
+
+Data Governance & Security:
+Unity Catalog, PII Masking, SHA256 Hashing, Anonymization, Email Scrubbing
+
+Data Analytics & BI:
+Power BI, DAX, Dashboard Development, KPI Design, Time Intelligence (MTD, YTD, YoY), Trend and Seasonality Analysis
+
+Data Modeling:
+Star Schema, Fact and Dimension Tables, Data Validation, Reconciliation Checks
+
+Excel:
+Pivot Tables, Power Query, XLOOKUP, INDEX-MATCH
+
+Tools:
+Git, GitHub, CI/CD Pipelines, SSMS
+
+--------------------------------------------------
+
+Experience:
+
+Company: MAQ Software
+Role: Software Engineer-1
+Duration: Aug 2025 – Present
+Location: Noida, India
+
+Responsibilities:
+- Migrated legacy ingestion framework to Customer Data Foundation (CDF) architecture using Azure Databricks and Unity Catalog
+- Designed multi-zone data architecture: Landing, Raw, Bronze, Silver, Gold, Business Views
+- Built metadata-driven ingestion and transformation pipelines using Synapse Pipelines and Databricks
+- Implemented PII handling using SHA256 hashing, anonymization, and email scrubbing
+- Applied fine-grained access control using Unity Catalog
+- Integrated Business Validation Tests (BVT) for data quality
+- Published Gold-layer datasets for Power BI and Microsoft Fabric
+- Automated permission management using GRANT statements
+
+--------------------------------------------------
+
+Company: MAQ Software
+Role: Associate Software Engineer
+Duration: Jan 2025 – Jul 2025
+Location: Noida, India
+
+Responsibilities:
+- Built Power BI dashboards for KPIs and business metrics
+- Designed semantic models using star schema
+- Created DAX measures (MTD, YTD, YoY)
+- Wrote optimized SQL queries for data transformation
+- Performed data validation and reconciliation checks
+- Used Excel Pivot Tables for validation
+- Built geographical analysis dashboards using maps (USA store distribution)
+- Supported 200+ users with reporting dashboards
+
+--------------------------------------------------
+
+Projects:
+
+Project: MPL Planning System
+Description:
+Worked on partner eligibility logic, KPI systems, and data pipelines. Built SQL transformations and Power BI dashboards.
+
+Technologies:
+SQL, Power BI, Data Engineering
+
+---
+
+Project: Flight Price Prediction
+Description:
+Developed machine learning models using Random Forest, Gradient Boosting, and XGBoost to predict flight prices accurately.
+
+Technologies:
+Python, Machine Learning
+
+---
+
+Project: Plant Disease Detection
+Description:
+Built a CNN-based deep learning model to detect plant leaf diseases for early diagnosis.
+
+Technologies:
+Python, Deep Learning, CNN
+
+---
+
+Project: Movie Recommendation System
+Description:
+Developed a recommendation system to provide personalized movie suggestions using NLP and ML techniques.
+
+Technologies:
+Python, NLP, Machine Learning
+
+---
+
+Project: Ez-Ryde (Ride Across Campus)
+Duration: Feb 2024 – Ongoing
+Description:
+Developing a campus transportation system using e-rickshaw and bicycles.
+
+--------------------------------------------------
+
+Education:
+
+College:
+Thapar Institute of Engineering and Technology, Patiala
+Degree: B.E. Computer Science
+Duration: 2021 – 2025
+CGPA: 8.5
+
+School:
+Greenland Convent School, Ludhiana
+Class 12: 96.6% (CBSE)
+
+School:
+B.C.M Sr Sec School, Ludhiana
+Class 10: 97.4% (CBSE)
+
+--------------------------------------------------
+
+Certifications:
+
+- Microsoft Certified: DP-600 – Fabric Analytics Engineer Associate
+- Microsoft Certified: DP-700 – Fabric Data Engineer Associate
+
+--------------------------------------------------
+
+Achievements:
+
+- Awarded 90% scholarship in senior secondary school for academic excellence
+- Core member of Virsa Society (2021–2023)
+- Runner-up in district-level Mathematics quiz competition
+
+--------------------------------------------------
+
+Additional Information:
+
+- Strong experience in data engineering and analytics
+- Skilled in building end-to-end data pipelines
+- Experience with real-world enterprise data systems
