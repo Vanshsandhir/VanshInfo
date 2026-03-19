@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.46.0",
-    "ai": "^4.0.0",
+    "ai": "^5.0.0",
     "@google/generative-ai": "^0.21.0",
     "cors": "^2.8.6",
     "dom": "^0.0.3",
