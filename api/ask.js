@@ -1,6 +1,4 @@
-// api/ask.js
 import fs from "fs";
-import { streamText } from "ai";
 
 // simple similarity scoring
 function scoreChunk(chunk, query) {
@@ -42,10 +40,6 @@ STRICT:
 - Use ONLY the given context
 - If not found, say: "I don't know"
 
-IMPORTANT:
-- Give the fastest possible response
-- Prefer short answers over detailed ones
-
 Context:
 ${topChunks}
 
@@ -53,36 +47,38 @@ Question:
 ${message}
 `;
 
-  // 🚀 Vercel AI Gateway call
-  const result = await streamText({
-    model: "openai/gpt-5.2-chat", // you can change model later
-    prompt,
-    maxTokens: 100, // keep small for speed
-    temperature: 0.5,
-  });
-
-  // collect full response
-  let responseText = "";
-  for await (const chunk of result.textStream) {
-    responseText += chunk;
-  }
-
-  return responseText || "I don't know";
-}
-
-// serverless handler
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Only POST allowed" });
-  }
-
   try {
-    const { message } = req.body;
-    const reply = await ask(message);
-    res.status(200).json({ reply });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Error" });
+    // 🚀 Groq API (FREE)
+    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        max_tokens: 100,
+        temperature: 0.5,
+      }),
+    });
+
+    const data = await res.json();
+
+    console.log("GROQ RESPONSE:", JSON.stringify(data, null, 2));
+
+    const text = data?.choices?.[0]?.message?.content;
+
+    return text?.trim() || "I don't know";
+
+  } catch (error) {
+    console.error("Groq Error:", error);
+    return "Error generating response";
   }
 }
 
