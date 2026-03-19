@@ -12,6 +12,8 @@
   "dependencies": {
     "cors": "^2.8.6",
     "dom": "^0.0.3",
+    "framer-motion": "^...",
+    "lucide-react": "^...".
     "express": "^5.2.1",
     "lucide-react": "^0.577.0",
     "nodemon": "^3.1.14",
