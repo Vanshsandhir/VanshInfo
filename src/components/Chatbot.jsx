@@ -9,7 +9,7 @@ const Chatbot = () => {
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
-
+  
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat, loading]);
