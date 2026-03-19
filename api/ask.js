@@ -58,7 +58,7 @@ ${message}
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer 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`, // ✅ use .env
+      "Authorization": `Bearer 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`, // ✅ use .env
       "Content-Type": "application/json",
       //"HTTP-Referer": "http://localhost:5173", // required
       "X-Title": "Vansh Chatbot",
