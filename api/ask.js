@@ -66,8 +66,8 @@ ${message}
     body: JSON.stringify({
       //model: "meta-llama/llama-3.2-3b-instruct:free",
       model: "nvidia/nemotron-3-super-120b-a12b:free",
-      temperature: 0.5,   // lower = faster + stable
-      max_tokens: 80,     // VERY IMPORTANT (reduces delay)
+      //temperature: 0.5,   // lower = faster + stable
+      //max_tokens: 80,     // VERY IMPORTANT (reduces delay)
       messages: [
         {
           role: "user",
