@@ -1,35 +1,7 @@
 // api/ask.js
 import fs from "fs";
-//import { GoogleGenerativeAI } from "@google/generative-ai";
+import { streamText } from "ai";
 
-// init Gemini
-//const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-// 🚀 Gemini API (NO SDK - stable)
-const res = await fetch(
-  `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      contents: [
-        {
-          parts: [{ text: prompt }],
-        },
-      ],
-    }),
-  }
-);
-
-const data = await res.json();
-
-console.log("GEMINI RAW:", JSON.stringify(data, null, 2));
-
-const text =
-  data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-return text?.trim() || "I don't know";
 // simple similarity scoring
 function scoreChunk(chunk, query) {
   const words = query.toLowerCase().split(" ");
@@ -51,7 +23,7 @@ export async function ask(message) {
     .map((chunk) => ({ chunk, score: scoreChunk(chunk, message) }))
     .sort((a, b) => b.score - a.score);
 
-  // top 3 chunks
+  // take top 3
   const topChunks = ranked.slice(0, 3).map((c) => c.chunk).join("\n\n");
 
   const prompt = `
@@ -70,6 +42,10 @@ STRICT:
 - Use ONLY the given context
 - If not found, say: "I don't know"
 
+IMPORTANT:
+- Give the fastest possible response
+- Prefer short answers over detailed ones
+
 Context:
 ${topChunks}
 
@@ -77,16 +53,21 @@ Question:
 ${message}
 `;
 
-  // 🚀 Gemini call
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.0-pro"
+  // 🚀 Vercel AI Gateway call
+  const result = await streamText({
+    model: "openai/gpt-5.2-chat", // you can change model later
+    prompt,
+    maxTokens: 100, // keep small for speed
+    temperature: 0.5,
   });
 
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
-  const text = response.text();
+  // collect full response
+  let responseText = "";
+  for await (const chunk of result.textStream) {
+    responseText += chunk;
+  }
 
-  return text || "I don't know";
+  return responseText || "I don't know";
 }
 
 // serverless handler
@@ -104,8 +85,6 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Error" });
   }
 }
-
-
 
 // // api/ask.js
 // import fs from "fs";
