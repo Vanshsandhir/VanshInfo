@@ -1,3 +1,4 @@
+// api/ask.js
 import fs from "fs";
 
 // simple similarity scoring
@@ -10,37 +11,23 @@ function scoreChunk(chunk, query) {
   return score;
 }
 
-// core function
-export async function ask(message) {
-  // load chunks
+// core logic
+async function ask(message) {
   const filePath = new URL("./chunks.json", import.meta.url);
   const chunks = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
-  // rank chunks
   const ranked = chunks
     .map((chunk) => ({ chunk, score: scoreChunk(chunk, message) }))
     .sort((a, b) => b.score - a.score);
 
-  // take top 3
   const topChunks = ranked.slice(0, 3).map((c) => c.chunk).join("\n\n");
 
   const prompt = `
 You are a fast and friendly AI assistant for Vansh Sandhir's portfolio.
 
-GOAL:
-Answer quickly with short, clear, engaging responses.
+Keep answers VERY short (1–3 lines), simple, with 1–2 emojis 😊
 
-STYLE:
-- Keep answers VERY short (1–3 lines max)
-- Use simple language
-- Use 1–2 emojis 😊
-- Break into small lines (no big paragraphs)
-
-STRICT:
-- Use ONLY the given context
-- If not found, say: "I don't know"
-
-Context:
+Use ONLY this context:
 ${topChunks}
 
 Question:
@@ -48,7 +35,6 @@ ${message}
 `;
 
   try {
-    // 🚀 Groq API (FREE)
     const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -56,13 +42,8 @@ ${message}
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
-        messages: [
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
+        model: "llama-3.1-8b-instant",
+        messages: [{ role: "user", content: prompt }],
         max_tokens: 100,
         temperature: 0.5,
       }),
@@ -70,15 +51,36 @@ ${message}
 
     const data = await res.json();
 
-    console.log("GROQ RESPONSE:", JSON.stringify(data, null, 2));
+    console.log("GROQ RESPONSE:", data);
 
-    const text = data?.choices?.[0]?.message?.content;
+    return data?.choices?.[0]?.message?.content || "I don't know";
 
-    return text?.trim() || "I don't know";
+  } catch (err) {
+    console.error("Groq Error:", err);
+    return "Error";
+  }
+}
 
-  } catch (error) {
-    console.error("Groq Error:", error);
-    return "Error generating response";
+// ✅ THIS FIXES YOUR ERROR
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Only POST allowed" });
+  }
+
+  try {
+    const { message } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: "Message required" });
+    }
+
+    const reply = await ask(message);
+
+    return res.status(200).json({ reply });
+
+  } catch (err) {
+    console.error("API ERROR:", err);
+    return res.status(500).json({ error: "Server error" });
   }
 }
 
