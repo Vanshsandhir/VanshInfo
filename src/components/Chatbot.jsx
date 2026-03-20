@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
 const Chatbot = () => {
@@ -6,6 +6,19 @@ const Chatbot = () => {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Ref for scrolling
+  const chatContainerRef = useRef(null);
+
+  // Auto-scroll effect
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [chat, loading]);
 
   const typeText = (text, callback) => {
     let i = 0;
@@ -16,6 +29,12 @@ const Chatbot = () => {
       i++;
 
       callback(current);
+
+      // Scroll while typing
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop =
+          chatContainerRef.current.scrollHeight;
+      }
 
       if (i >= text.length) {
         clearInterval(interval);
@@ -34,26 +53,22 @@ const Chatbot = () => {
     if (!message.trim()) return;
 
     const userMsg = message;
-
     setChat((prev) => [...prev, { role: "user", text: userMsg }]);
     setMessage("");
     setLoading(true);
 
     const response = await fetch("/api/ask", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: userMsg }),
     });
 
     const data = await response.json();
     setLoading(false);
 
-    // Add empty bot message
+    // Add empty bot message for typing animation
     setChat((prev) => [...prev, { role: "bot", text: "" }]);
 
-    // Typing animation
     typeText(data.reply, (typedText) => {
       setChat((prev) => {
         const updated = [...prev];
@@ -83,7 +98,10 @@ const Chatbot = () => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-3 space-y-3">
+          <div
+            ref={chatContainerRef}
+            className="flex-1 overflow-y-auto p-3 space-y-3"
+          >
             {chat.map((c, i) => (
               <div
                 key={i}
@@ -105,9 +123,7 @@ const Chatbot = () => {
                         strong: (props) => (
                           <strong className="text-blue-400" {...props} />
                         ),
-                        li: (props) => (
-                          <li className="ml-4 list-disc" {...props} />
-                        ),
+                        li: (props) => <li className="ml-4 list-disc" {...props} />,
                       }}
                     >
                       {c.text}
@@ -142,10 +158,7 @@ const Chatbot = () => {
               }}
               placeholder="Ask about Vansh..."
             />
-            <button
-              onClick={sendMessage}
-              className="bg-blue-600 px-3 rounded"
-            >
+            <button onClick={sendMessage} className="bg-blue-600 px-3 rounded">
               Send
             </button>
           </div>
