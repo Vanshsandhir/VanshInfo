@@ -47,7 +47,9 @@ The project includes a context-aware chatbot that responds to user queries using
 
 ## Project Structure
 /src Frontend React components
+
 /api Backend API (Node.js)
+
 /chunks.json Knowledge base for chatbot
 
 
