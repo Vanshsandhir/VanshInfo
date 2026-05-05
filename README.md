@@ -1,16 +1,66 @@
-# React + Vite
+React + Vite Portfolio with AI Chatbot
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a portfolio website built using React and Vite, designed to deliver a fast and modern user experience. It includes an integrated AI chatbot that answers user queries based on portfolio data.
 
-Currently, two official plugins are available:
+Features
+Fast development and build performance using Vite
+Responsive and clean portfolio UI
+Context-aware AI chatbot integration
+Backend API using Node.js
+Secure LLM API integration
+Optimized for quick and relevant responses
+AI Chatbot Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The project includes a context-aware chatbot that responds to user queries using predefined portfolio data.
 
-## React Compiler
+How it works
+Loads structured data from a local JSON file
+Applies a similarity scoring mechanism to identify relevant content
+Selects top matching data chunks
+Sends context to an LLM API for response generation
+Returns short, human-like answers
+Key Characteristics
+Context-restricted responses to avoid hallucination
+Lightweight backend logic
+Fast response generation
+Simple and clear conversational output
+Tech Stack
+React
+Vite
+Node.js (serverless API)
+LLM API (Groq / OpenRouter)
+Project Structure
+/src            Frontend React components
+/api            Backend API (Node.js)
+/chunks.json    Knowledge base for chatbot
+Setup Instructions
+Clone the repository
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install dependencies
 
-## Expanding the ESLint configuration
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Add environment variables
+
+GROQ_API_KEY=your_api_key
+
+Run the development server
+
+npm run dev
+Deployment
+
+The project can be deployed using:
+
+Vercel
+Netlify
+
+The API runs as a serverless function, so no separate backend server setup is required.
+
+Future Improvements
+Replace keyword matching with vector embeddings
+Improve ranking accuracy
+Add analytics and logging
+Enhance UI for chatbot interactions
+Summary
+
+This project demonstrates the integration of a frontend portfolio with a lightweight backend and an AI-powered chatbot, focusing on performance, simplicity, and contextual accuracy.
